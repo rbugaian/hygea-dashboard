@@ -1,0 +1,78 @@
+<% content_for :nav_sidebar do %>
+	<div class="col-sm-3 col-md-2 sidebar">
+		<ul class="nav nav-sidebar">
+			<li><a href="/tasks_section">Tasks</a></li>
+			<li><a href="/personnel_section">Personnel</a></li>
+			<li><a href="/patients_section">Patients</a></li>
+			<li class="active"><a href="/wards_section">Wards <span class="sr-only">(current)</span></a></li>
+		</ul>
+	</div>
+<% end %>
+
+<%= content_for :sections do %>
+
+  <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 class="page-header">Dashboard</h1>
+	
+	<h2 class="sub-header">Wards <%= link_to 'Create', {controller: 'wards', action: 'create'}, class: 'btn btn-default pull-right create-button'  %> </h2>
+
+		<div class="bs-example" data-example-id="collapse-accordion">
+		    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+			    <% Ward.all.each do |ward| %>
+					  <div class="panel panel-default">
+				        <div class="panel-heading" role="tab" id="<%= 'heading-' + ward.id.to_s %>">
+				          <h4 id="-collapsible-group-item-#<%= ward.id.to_s %>-" class="panel-title">
+				            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#<%= 'collapse-' + ward.room_number.to_s %>" aria-expanded="false" aria-controls="collapseOne">
+				              <%= 'Room ' + ward.room_number.to_s %>
+				            </a>
+				          <a class="anchorjs-link" href="#-collapsible-group-item-#<%= ward.id.to_s %>-"><span class="anchorjs-icon"></span></a></h4>
+				        </div>
+				        <div style="height: 0px;" aria-expanded="false" id="<%= 'collapse-' + ward.room_number.to_s %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="<%= 'heading-' + ward.id.to_s %>">
+				          <div class="panel-body">
+
+				          	<%= link_to 'Add', {controller: 'wards', action: 'add_patient', id: ward.id}, class: 'btn btn-default create-button btn-add-patient'  %>
+
+				            <% if ward.patients.empty? %>
+								Room is empty
+							<% else %>
+								<div class="table-responsive">
+									  <table class="table table-striped">
+									    <thead>
+									      <tr>
+									        <th>#</th>
+									        <th>Name</th>
+									        <th>Created at</th>
+									        <th>Updated at</th>
+									      </tr>
+									    </thead>
+									    <tbody>
+								<% ward.patients.each do |patient| %>
+									      <tr>
+									        <td><%= patient.id %></td>
+									        <td><%= link_to (patient.first_name.to_s + ' ' + patient.last_name.to_s) , { controller: 'patients', action: 'show_patient', id: patient } %> </td>
+									        <td><%= patient.created_at %></td>
+									        <td><%= patient.updated_at %></td>
+									      </tr>
+									      <% end %>
+									    </tbody>
+									  </table>
+									</div>
+								
+							<% end %>
+				          </div>
+				        </div>
+				     </div>
+				<% end %>
+		    </div>
+		</div>
+	
+		
+		
+  </div>
+
+
+
+<% end %>
+
+<%= render template: 'dashboard/show'  %>

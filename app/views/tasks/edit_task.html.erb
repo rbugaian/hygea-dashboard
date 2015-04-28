@@ -1,0 +1,72 @@
+<% content_for :nav_sidebar do %>
+  <div class="col-sm-3 col-md-2 sidebar">
+  	<ul class="nav nav-sidebar">
+  		<li class="active"><a href="/tasks_section">Tasks <span class="sr-only">(current)</span></a></li>
+  		<li><a href="/personnel_section">Personnel</a></li>
+  		<li><a href="/patients_section">Patients</a></li>
+  		<li><a href="#">Export</a></li>
+  	</ul>
+  </div>
+<% end %>
+
+<%= content_for :sections do %>
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h1 class="page-header">Dashboard</h1>
+  
+  <h2 class="sub-header form-task-heading">Edit task</h2>
+
+	<div class="panel panel-default">
+	  <div class="panel-body" >
+		  
+  	    <%= form_tag("/edit_task", method: "post") do %>
+
+  	      <div class="form-group col-md-6 " >
+  	        <h5 >Personnel:</h5>
+  	        <%= select_tag(:personnel_id, options_from_collection_for_select(Personnel.all, 'id', 'name'), { :class => 'form-control' }) %>
+  	      </div>
+
+  	      <div class="form-group col-md-6 " >
+  	        <h5 >Patient:</h5>
+  	        <%= select_tag(:patient_id, options_from_collection_for_select(Patient.all, 'id', 'name'), { :class => 'form-control' }) %>
+  	      </div>
+
+  	      <div class="form-group task-create-field-container" >
+  	        <h5 >Title:</h5>
+  	        <%= text_field_tag :title, nil, class: 'form-control', placeholder: 'Enter title', required: true, autofocus: true, value: @task_to_edit.title %>
+  	      </div>
+
+          
+
+          <div class="form-group  task-create-field-container">
+            <h5 >Time:</h5>
+
+             <%= datetime_select('date_to_execute' , 'date', start_year: Time.now.year) %>
+
+          </div>
+
+  	      <div class="form-group task-create-field-container" >
+  	        <h5 >Description:</h5>
+  	        <%= text_area :description, nil, class: 'form-control', placeholder: 'Enter description', required: true, type: 'text', rows: '5', value: @task_to_edit.description %>
+  	      </div>
+
+  	      <div class="col-md-6">
+  	        <%= link_to 'Cancel', {controller: 'tasks', action: 'show_task', id: @task_to_edit.id}, class: 'btn btn-lg btn-danger btn-block form-create-task-button'%> 
+  	      </div>
+
+  	      <div class="col-md-6">
+  	        <%= submit_tag 'Save', class: 'btn btn-lg btn-success btn-block form-create-task-button' %>  
+  	      </div>
+
+  	      <%= hidden_field_tag :id, @task_to_edit.id %>
+      
+  	    <% end %>
+
+	</div>
+	</div>
+
+</div>
+
+<% end %>
+
+<%= render template: 'dashboard/show'  %>

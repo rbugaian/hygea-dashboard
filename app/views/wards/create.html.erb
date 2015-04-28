@@ -1,0 +1,58 @@
+<% content_for :nav_sidebar do %>
+	<div class="col-sm-3 col-md-2 sidebar">
+		<ul class="nav nav-sidebar">
+			<li><a href="/tasks_section">Tasks</a></li>
+			<li><a href="/personnel_section">Personnel</a></li>
+			<li><a href="/patients_section">Patients</a></li>
+			<li class="active"><a href="/wards_section">Wards <span class="sr-only">(current)</span></a></li>
+		</ul>
+	</div>
+<% end %>
+
+<%= content_for :sections do %>
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h1 class="page-header">Dashboard</h1>
+  
+  <h2 class="sub-header form-task-heading">Create ward</h2>
+
+<div class="panel panel-default">
+  <div class="panel-body" >
+  
+    <%= form_tag("/create_ward", method: "post") do %>
+
+      <div class="form-group task-create-field-container" >
+        <h5 >Title:</h5>
+        <%= text_field_tag :room_number, nil, class: 'form-control', placeholder: 'Enter room number', required: true, autofocus: true %>
+      </div>
+	  
+      <div class="form-group task-create-field-container" >
+        <h5 >Title:</h5>
+        <%= text_field_tag :capacity, nil, class: 'form-control', placeholder: 'Enter room capacity', required: true, autofocus: true %>
+      </div>
+	  
+	  
+	  <div class="form-group task-create-field-container">
+		  <h5 >Patients:</h5>
+		  <%= collection_select(:patients, :id, Patient.all, :id, :name, {}, { :multiple => true, :class => "form-control", :size => Patient.all.size}) %>
+		  
+	  </div>
+	  
+      <div class="col-md-6">
+        <%= link_to 'Cancel', {controller: 'tasks', action: 'create'}, class: 'btn btn-lg btn-danger btn-block form-create-task-button'%>
+      </div>
+
+      <div class="col-md-6">
+        <%= submit_tag 'Create', class: 'btn btn-lg btn-success btn-block form-create-task-button' %>
+      </div>
+
+    <% end %>
+
+</div>
+</div>
+
+</div>
+
+<% end %>
+
+<%= render template: 'dashboard/show'  %>

@@ -1,0 +1,48 @@
+<% content_for :nav_sidebar do %>
+	<div class="col-sm-3 col-md-2 sidebar">
+		<ul class="nav nav-sidebar">
+			<li><a href="/tasks_section">Tasks</a></li>
+			<li><a href="/personnel_section">Personnel</a></li>
+			<li class="active"><a href="/patients_section">Patients<span class="sr-only">(current)</span></a></li>
+			<li><a href="/wards_section">Wards</a></li>
+		</ul>
+	</div>
+<% end %>
+
+<%= content_for :sections do %>
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h1 class="page-header">Dashboard</h1>
+	
+	<h2 class="sub-header">Patients <%= link_to 'Create', {controller: 'patients', action: 'create'}, class: 'btn btn-default pull-right create-button'  %> </h2>
+	
+	<div class="table-responsive">
+	  <table class="table table-striped">
+	    <thead>
+	      <tr>
+	        <th>#</th>
+	        <th>Name</th>
+	        <th>Created at</th>
+	        <th>Updated at</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+
+	    <% current_doctor.patients.each do |patient| %>
+	      <tr>
+	        <td><%= patient.id %></td>
+	        <td><%= link_to (patient.first_name.to_s + ' ' + patient.last_name.to_s) , { controller: 'patients', action: 'show_patient', id: patient } %> </td>
+	        <td><%= patient.created_at %></td>
+	        <td><%= patient.updated_at %></td>
+	      </tr>
+	    <% end %>
+     
+	    </tbody>
+	  </table>
+	</div>
+  
+  
+</div>
+<% end %>
+
+<%= render template: 'dashboard/show'  %>

@@ -1,0 +1,79 @@
+<% content_for :nav_sidebar do %>
+	<div class="col-sm-3 col-md-2 sidebar">
+		<ul class="nav nav-sidebar">
+			<li class="active"><a href="/tasks_section">Tasks <span class="sr-only">(current)</span></a></li>
+			<li><a href="/personnel_section">Personnel</a></li>
+			<li><a href="/patients_section">Patients</a></li>
+			<li><a href="/wards_section">Wards</a></li>
+		</ul>
+	</div>
+<% end %>
+
+<%= content_for :sections do %>
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h1 class="page-header">Dashboard</h1>
+  
+	<h2 class="sub-header form-task-heading">View task </h2>
+
+	<h2 class="sub-header">Tasks <%= link_to 'Edit', {controller: 'tasks', action: 'edit', id: @task}, class: 'btn btn-default pull-right create-button'  %> </h2>
+
+	<div class="panel panel-default">
+	  <div class="list-group" >
+
+	  <%= hidden_field_tag "task_id", @task.id, { :id => "task_id" } %>
+  
+	  <% if @doctor_name.present? && @personnel_name.present? %>
+	      <div class='list-group-item'>
+	        <div class="task-show-personal col-xs-6 ">
+	          <h4>Personnel:</h4>
+	          <p> <%= @personnel_name %> </p>
+	        </div>
+	        <div class="task-show-personal">
+	          <h4>Doctor:</h4>
+	          <p> <%= @doctor_name %> </p>
+	        </div>
+	        <div class="task-show-personal">
+	          <h4>Patient:</h4>
+	          <p> <%= @task.patient_name %> </p>
+	        </div>
+	      </div>
+	  <% else %>
+	    <div class='list-group-item'>
+	      <div class="task-show-personal">
+	        <h4>Personnel:</h4>
+	        <p> <%= @personnel_name %> </p>
+	      </div>
+	    </div>
+	  <% end %>
+
+	  	<div class='list-group-item'>
+		  	<div class="task-show-personal col-xs-6 ">
+		    	<h4>Date to execute:</h4>
+		    	<p> <%= @task.date_to_execute.strftime("%H:%M on %d %B %Y") %> </p>
+		    </div>
+		    <div class="task-show-personal">
+		    	<h4>Status:</h4>
+		    	<%= select_tag(:status, options_for_select([['Waiting', 0], ['Started', 1], ['Finished', 2]]), :id => 'status_selector', :onchange => 'setStatus()') %>
+		    </div>
+	    </div>
+      
+	    <div class='list-group-item'>
+	      <h4>Title:</h4>
+	      <p> <%= @task.title %> </p>
+	    </div>
+
+	    <div class='list-group-item'>
+	      <h4>Description:</h4>
+	      <p> <%=  simple_format(@task.description).html_safe %> </p>
+	    </div>
+	  </div>
+	</div>
+
+</div>
+
+
+
+<% end %>
+
+<%= render template: 'dashboard/show'  %>

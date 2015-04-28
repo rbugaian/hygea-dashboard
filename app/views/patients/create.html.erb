@@ -1,0 +1,73 @@
+<% content_for :nav_sidebar do %>
+	<div class="col-sm-3 col-md-2 sidebar">
+		<ul class="nav nav-sidebar">
+			<li><a href="/tasks_section">Task</a></li>
+			<li><a href="/personnel_section">Personnel</a></li>
+			<li class="active"><a href="/patients_section">Patients<span class="sr-only">(current)</span></a></li>
+			<li><a href="#">Export</a></li>
+		</ul>
+	</div>
+<% end %>
+
+<%= content_for :sections do %>
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h1 class="page-header">Dashboard</h1>
+  
+  <h2 class="sub-header form-task-heading">Create patient</h2>
+
+<div class="panel panel-default">
+  <div class="panel-body" >
+  
+    <%= form_tag("/create_patient", method: "post") do %>
+
+      <div class="form-group personnel-selector" >
+        <h5 >Personnel:</h5>
+        <%= select_tag(:personnel_id, options_from_collection_for_select(Personnel.all, 'id', 'email'), { :class => 'form-control' }) %>
+      </div>
+
+      <div class="form-group task-create-field-container" >
+        <h5 >Firstname:</h5>
+        <%= text_field_tag :first_name, nil, class: 'form-control', placeholder: 'Enter title', required: true, autofocus: true %>
+      </div>
+
+      <div class="form-group task-create-field-container" >
+        <h5 >Lastname:</h5>
+        <%= text_field_tag :last_name, nil, class: 'form-control', placeholder: 'Enter lastname', required: true %>
+      </div>
+	  
+      <div class="form-group task-create-field-container" >
+        <h5 >IDNO:</h5>
+        <%= text_field_tag :idno, nil, class: 'form-control', placeholder: 'Enter IDNO', required: true %>
+      </div>
+	  
+      <div class="form-group personnel-selector" >
+        <h5 >Blood type:</h5>
+        <%= select_tag(:blood_type, options_for_select([['Type I', 1], ['Type II', 2], ['Type III', 3], ['Type IV', 4]]), { :class => 'form-control' }) %>
+      </div>
+
+      <div class="form-group wards-selector" >
+        <h5 >Ward:</h5>
+        <%= select_tag(:ward_id, options_from_collection_for_select(Ward.all, 'id', 'full_info'), { :class => 'form-control' }) %>
+      </div>
+
+      <div class="col-md-6">
+        <%= link_to 'Cancel', {controller: 'dashboard', action: 'patients_section'}, class: 'btn btn-lg btn-danger btn-block form-create-task-button'%>
+      </div>
+
+      <div class="col-md-6">
+        <%= submit_tag 'Create', class: 'btn btn-lg btn-success btn-block form-create-task-button' %>
+      </div>
+
+
+
+    <% end %>
+
+</div>
+</div>
+
+</div>
+
+<% end %>
+
+<%= render template: 'dashboard/show'  %>

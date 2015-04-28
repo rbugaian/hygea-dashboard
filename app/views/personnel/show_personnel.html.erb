@@ -1,0 +1,41 @@
+<% content_for :nav_sidebar do %>
+	<div class="col-sm-3 col-md-2 sidebar">
+		<ul class="nav nav-sidebar">
+			<li><a href="/tasks_section">Task</a></li>
+			<li class="active"><a href="/personnel_section">Personnel<span class="sr-only">(current)</span></a></li>
+			<li><a href="/patients_section">Patients</a></li>
+			<li><a href="/wards_section">Wards</a></li>
+		</ul>
+	</div>
+<% end %>
+  
+<%= content_for :sections do %>
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h1 class="page-header">Dashboard</h1>
+  
+	<h2 class="sub-header form-task-heading">View personnel</h2>
+
+	<div class="panel panel-default">
+	  <div class="list-group" >
+  
+	    <div class='list-group-item'>
+	      <div class="task-show-personal">
+	        <h4>Personnel:</h4>
+	        <p> <%= @personnel.first_name.to_s + ' ' + @personnel.last_name.to_s %> </p>
+	      </div>
+	    </div>
+				
+	    <div class='list-group-item'>
+	      <h4>Email:</h4>
+	      <p> <%= @personnel.email %> </p>
+	    </div>
+		
+	  </div>
+	</div>
+
+</div>
+
+<% end %>
+
+<%= render template: 'dashboard/show'  %>

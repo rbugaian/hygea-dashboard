@@ -1,0 +1,64 @@
+<script>
+	$( document ).ready(function() {
+		console.log("Loaded");
+		setRefresher();
+	});
+</script> 
+
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<h1 class="page-header">Dashboard</h1>
+
+<h2 class="sub-header">Tasks <%= link_to 'Create', {controller: 'tasks', action: 'create'}, class: 'btn btn-default pull-right create-button'  %> </h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="text-centered">#</th>
+        <th >Title</th>
+        <th class="text-centered">Status</th>
+        <th class="text-centered">Created at</th>
+        <th class="text-centered">Time to execute</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    <% current_doctor.tasks.order('date_to_execute DESC').each do |task| %>
+      <% if task.should_execute %>
+        <tr class="alerting danger" >
+      <% else %>
+        <tr>
+      <% end %>
+
+        <td class="text-centered"><%= task.id %></td>
+        <td ><%= link_to task.title, { controller: 'tasks', action: 'show_task', id: task } %> </td>
+        <td>
+        	<% if task.status == 0 %>
+				
+				<div class="alert alert-danger" role="alert">
+						Waiting  
+				</div>
+
+			<% elsif task.status == 1 %>
+
+				<div class="alert alert-info" role="alert">
+						Pending
+				</div>
+
+			<% else %>
+
+				<div class="alert alert-success" role="alert">
+  					Done
+				</div>
+
+			<% end %>
+        </td>
+        <td class="text-centered"><%= task.created_at.strftime("%H:%M on %d %B %Y") %></td>
+        <td class="text-centered"><%= task.date_to_execute.strftime("%H:%M on %d %B %Y") %></td>
+
+      </tr>
+    <% end %>
+ 
+    </tbody>
+  </table>
+</div>
+</div>

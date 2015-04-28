@@ -1,0 +1,44 @@
+
+<%= content_for :sections do %>
+
+<div class="main centered-panel">
+  <h1 class="page-header">Dashboard</h1>
+  
+  <h2 class="sub-header form-task-heading">Edit profile</h2>
+
+	<div class="panel panel-default">
+	  <div class="panel-body centered-micro-panel" >
+  
+	    <%= form_tag("/profile/edit", method: "post") do %>
+
+	      <div class="form-group task-create-field-container" >
+	        <h5 >Firstname:</h5>
+	        <%= text_field_tag :first_name, nil, class: 'form-control', placeholder: 'Enter firstname', required: true, autofocus: true, value: current_doctor.first_name %>
+	      </div>
+		  
+	      <div class="form-group task-create-field-container" >
+	        <h5 >Lastname:</h5>
+	        <%= text_field_tag :last_name, nil, class: 'form-control', placeholder: 'Enter lastname', required: true, autofocus: true, value: current_doctor.last_name %>
+	      </div>
+	      
+	      <div class="col-md-6">
+	        <%= link_to 'Cancel', {controller: 'profile', action: 'show', id: current_doctor.id}, class: 'btn btn-lg btn-danger btn-block form-create-task-button'%> 
+	      </div>
+
+	      <div class="col-md-6">
+	        <%= submit_tag 'Create', class: 'btn btn-lg btn-success btn-block form-create-task-button' %>  
+	      </div>
+
+	      <%= hidden_field_tag :id, current_doctor.id %>
+      
+	    <% end %>
+
+	</div>
+	</div>
+
+</div>
+
+<% end %>
+
+
+<%= render template: 'dashboard/show'  %>
