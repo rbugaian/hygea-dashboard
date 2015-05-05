@@ -8,7 +8,12 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 <h1 class="page-header">Dashboard</h1>
 
-<h2 class="sub-header">Tasks <%= link_to 'Create', {controller: 'tasks', action: 'create'}, class: 'btn btn-default pull-right create-button'  %> </h2>
+<% if current_doctor.is_admin %>
+  <h2 class="sub-header">Tasks <%= link_to 'Create', {controller: 'tasks', action: 'create'}, class: 'btn btn-default pull-right create-button'  %> </h2>
+  <% else %>
+  <h2 class="sub-header">Tasks </h2>
+<% end %>
+
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>

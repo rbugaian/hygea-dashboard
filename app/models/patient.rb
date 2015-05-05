@@ -1,7 +1,7 @@
 class Patient < ActiveRecord::Base
   belongs_to :doctors
-  belongs_to :personnels
-  belongs_to :wards
+  # belongs_to :personnels
+  belongs_to :ward
 
   has_many :tasks
   

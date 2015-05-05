@@ -52,6 +52,10 @@ Rails.application.routes.draw do
   get 'sign_up', to: 'doctors#sign_up'
   post 'sign_up', to: 'doctors#create'
 
+  get 'show_doctor', to: 'doctors#show_doctor'
+  get 'create_doctor', to: 'doctors#create_doctor'
+  post 'create_doctor', to: 'doctors#create'
+
   get 'create_task', to: 'tasks#create'
   post 'create_task', to: 'tasks#submit'
 

@@ -2,7 +2,9 @@
 	<div class="col-sm-3 col-md-2 sidebar">
 		<ul class="nav nav-sidebar">
 			<li class="active"><a href="/tasks_section">Tasks <span class="sr-only">(current)</span></a></li>
-			<li><a href="/personnel_section">Personnel</a></li>
+			<% if current_doctor.is_admin %>
+				<li><a href="/personnel_section">Personnel</a></li>
+			<% end %>
 			<li><a href="/patients_section">Patients</a></li>
 			<li><a href="#">Export</a></li>
 		</ul>
@@ -25,7 +27,7 @@
 
       <div class="form-group col-md-6 " >
         <h5 >Personnel:</h5>
-        <%= select_tag(:personnel_id, options_from_collection_for_select(Personnel.all, 'id', 'name'), { :class => 'form-control' }) %>
+        <%= select_tag(:personnel_id, options_from_collection_for_select(Doctor.all, 'id', 'name'), { :class => 'form-control' }) %>
       </div>
 
       <div class="form-group col-md-6 " >

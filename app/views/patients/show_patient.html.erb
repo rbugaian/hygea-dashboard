@@ -2,7 +2,9 @@
 	<div class="col-sm-3 col-md-2 sidebar">
 		<ul class="nav nav-sidebar">
 			<li><a href="/tasks_section">Task</a></li>
-			<li><a href="/personnel_section">Personnel</a></li>
+			<% if current_doctor.is_admin %>
+				<li><a href="/personnel_section">Personnel</a></li>
+			<% end %>
 			<li class="active"><a href="/patients_section">Patients<span class="sr-only">(current)</span></a></li>
 			<li><a href="/wards_section">Wards</a></li>
 		</ul>

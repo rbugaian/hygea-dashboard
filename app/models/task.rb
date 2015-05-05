@@ -3,7 +3,7 @@ class Task < ActiveRecord::Base
   after_initialize :defaults
 
   belongs_to :doctor
-  belongs_to :personnel 
+  # belongs_to :personnel 
   belongs_to :patient
 
   scope :filter_by_title, lambda { |keyword|

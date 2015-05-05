@@ -14,7 +14,7 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
   <h1 class="page-header">Dashboard</h1>
 	
-	<h2 class="sub-header">Personnel <%= link_to 'Create', {controller: 'personnel', action: 'create'}, class: 'btn btn-default pull-right create-button'  %> </h2>
+	<h2 class="sub-header">Personnel <%= link_to 'Create', {controller: 'doctors', action: 'create_doctor'}, class: 'btn btn-default pull-right create-button'  %> </h2>
 	
 	<div class="table-responsive">
 	  <table class="table table-striped">
@@ -29,13 +29,13 @@
 	    </thead>
 	    <tbody>
 
-	    <% Personnel.all.each do |personnel| %>
+	    <% Doctor.all.each do |doctor| %>
 	      <tr>
-	        <td><%= personnel.id %></td>
-	        <td><%= link_to (personnel.first_name.to_s + ' ' + personnel.last_name.to_s) , { controller: 'personnel', action: 'show_personnel', id: personnel } %> </td>
-			<td><%= personnel.email %></td>
-	        <td><%= personnel.created_at %></td>
-	        <td><%= personnel.updated_at %></td>
+	        <td><%= doctor.id %></td>
+	        <td><%= link_to (doctor.first_name.to_s + ' ' + doctor.last_name.to_s) , { controller: 'doctors', action: 'show_doctor', id: doctor } %> </td>
+			<td><%= doctor.email %></td>
+	        <td><%= doctor.created_at %></td>
+	        <td><%= doctor.updated_at %></td>
 	      </tr>
 	    <% end %>
      

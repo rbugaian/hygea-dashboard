@@ -1,10 +1,14 @@
 class WardsController < ApplicationController
-  
+
+  include WardsHelper
+
   def submit
     logger.debug "Ward PARAMS: " + ward_params.inspect.to_s
-    
+
     ward = Ward.create(ward_params)
-    
+    patients = parse_patients_param(params)
+    ward.patients = patients
+
     if ward.save
       redirect_to :controller => 'dashboard', :action => 'wards_section'
     else
@@ -19,8 +23,6 @@ class WardsController < ApplicationController
     id = params[:id]
 
     @ward = Ward.find_by id: id
-
-    # @all_patients = Patient.all.except(@ward.patients)
 
     if @ward
       logger.debug 'SELECTED WARD: ' + @ward.inspect.to_s
@@ -41,8 +43,8 @@ class WardsController < ApplicationController
       patient.ward_id = ward_id
 
       update_data = Hash.new 
-      update_data[:ward_id] = ward_id
-      update_data[:id] = patient.id
+      update_data[:ward_id] = ward_id 
+      update_data[:id] = patient.id 
 
       patient.update(update_data) 
     end
@@ -54,7 +56,7 @@ class WardsController < ApplicationController
   private
   
   def ward_params
-    params.permit(:room_number, :capacity, :patients)
+    params.permit(:room_number, :capacity)
   end
 
 

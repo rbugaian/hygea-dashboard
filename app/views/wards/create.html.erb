@@ -2,7 +2,9 @@
 	<div class="col-sm-3 col-md-2 sidebar">
 		<ul class="nav nav-sidebar">
 			<li><a href="/tasks_section">Tasks</a></li>
-			<li><a href="/personnel_section">Personnel</a></li>
+			<% if current_doctor.is_admin %>
+				<li><a href="/personnel_section">Personnel</a></li>
+			<% end %>
 			<li><a href="/patients_section">Patients</a></li>
 			<li class="active"><a href="/wards_section">Wards <span class="sr-only">(current)</span></a></li>
 		</ul>
@@ -22,12 +24,12 @@
     <%= form_tag("/create_ward", method: "post") do %>
 
       <div class="form-group task-create-field-container" >
-        <h5 >Title:</h5>
+        <h5 >Room number:</h5>
         <%= text_field_tag :room_number, nil, class: 'form-control', placeholder: 'Enter room number', required: true, autofocus: true %>
       </div>
 	  
       <div class="form-group task-create-field-container" >
-        <h5 >Title:</h5>
+        <h5 >Capacity:</h5>
         <%= text_field_tag :capacity, nil, class: 'form-control', placeholder: 'Enter room capacity', required: true, autofocus: true %>
       </div>
 	  

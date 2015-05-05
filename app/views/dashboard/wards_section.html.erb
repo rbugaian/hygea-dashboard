@@ -2,7 +2,11 @@
 	<div class="col-sm-3 col-md-2 sidebar">
 		<ul class="nav nav-sidebar">
 			<li><a href="/tasks_section">Tasks</a></li>
-			<li><a href="/personnel_section">Personnel</a></li>
+
+			<% if current_doctor.is_admin %>
+				<li><a href="/personnel_section">Personnel</a></li>
+			<% end %>
+
 			<li><a href="/patients_section">Patients</a></li>
 			<li class="active"><a href="/wards_section">Wards <span class="sr-only">(current)</span></a></li>
 		</ul>
@@ -14,7 +18,15 @@
   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h1 class="page-header">Dashboard</h1>
 	
+    <% if current_doctor.is_admin %>
+
 	<h2 class="sub-header">Wards <%= link_to 'Create', {controller: 'wards', action: 'create'}, class: 'btn btn-default pull-right create-button'  %> </h2>
+
+	<% else %>
+
+	<h2 class="sub-header">Wards </h2>
+
+	<% end %>
 
 		<div class="bs-example" data-example-id="collapse-accordion">
 		    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">

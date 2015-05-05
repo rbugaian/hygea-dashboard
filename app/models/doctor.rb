@@ -12,6 +12,10 @@ class Doctor < ActiveRecord::Base
   has_many :patients
   
 
+  def name
+    self.first_name + ' ' + self.last_name
+  end
+
   def generate_auth_token!
     begin
       self.auth_token = Devise.friendly_token
