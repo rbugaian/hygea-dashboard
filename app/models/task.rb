@@ -62,7 +62,7 @@ class Task < ActiveRecord::Base
 
     logger.debug "Time of execution: " + time_of_execution.to_s + " Current_time: " + current_time.to_s
 
-    if ((time_of_execution > current_time - 600) && (time_of_execution < current_time + 600))
+    if ((time_of_execution > current_time - 600) && (time_of_execution < current_time + 600) && (self.status == 0))
       logger.debug 'TASK is READY'
       true
     else

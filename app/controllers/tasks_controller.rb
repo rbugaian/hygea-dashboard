@@ -9,9 +9,9 @@ class TasksController < ApplicationController
 		logger.debug "DOCTOR: " + doctor.inspect.to_s
 		@doctor_name = doctor.first_name.to_s + ' ' + doctor.last_name.to_s
 
-		personnel = Personnel.find_by(id: @task.personnel_id)
+		personnel = Doctor.find_by(id: @task.personnel_id)
 		logger.debug "PERSONNEL: " + personnel.inspect.to_s
-		@personnel_name = personnel.email
+		@personnel_name = personnel.name
 	end
 
 	def edit_task
