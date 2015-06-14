@@ -36,14 +36,27 @@
 	    </thead>
 	    <tbody>
 
-	    <% current_doctor.patients.each do |patient| %>
-	      <tr>
-	        <td><%= patient.id %></td>
-	        <td><%= link_to (patient.first_name.to_s + ' ' + patient.last_name.to_s) , { controller: 'patients', action: 'show_patient', id: patient } %> </td>
-	        <td><%= patient.created_at %></td>
-	        <td><%= patient.updated_at %></td>
-	      </tr>
+	    <% if current_doctor.is_admin %>
+			<% current_doctor.patients.each do |patient| %>
+		      <tr>
+		        <td><%= patient.id %></td>
+		        <td><%= link_to (patient.first_name.to_s + ' ' + patient.last_name.to_s) , { controller: 'patients', action: 'show_patient', id: patient } %> </td>
+		        <td><%= patient.created_at %></td>
+		        <td><%= patient.updated_at %></td>
+		      </tr>
+		    <% end %>
+	    <% else %>
+	    	<%  Patient.where('personnel_id = ?', current_doctor.id).each do |patient| %>
+		      <tr>
+		        <td><%= patient.id %></td>
+		        <td><%= link_to (patient.first_name.to_s + ' ' + patient.last_name.to_s) , { controller: 'patients', action: 'show_patient', id: patient } %> </td>
+		        <td><%= patient.created_at %></td>
+		        <td><%= patient.updated_at %></td>
+		      </tr>
+		    <% end %>
 	    <% end %>
+
+	    
      
 	    </tbody>
 	  </table>
