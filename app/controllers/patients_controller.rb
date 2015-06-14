@@ -16,6 +16,8 @@ class PatientsController < ApplicationController
     patient_id = params[:id]
     
     @patient = Patient.find_by(id: patient_id)
+
+    @personnel_name = Doctor.find(@patient.personnel_id) 
     
     @patient_name = @patient.last_name.to_s + ' ' + @patient.first_name.to_s
   end
