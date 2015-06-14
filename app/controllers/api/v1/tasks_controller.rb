@@ -82,6 +82,6 @@ class Api::V1::TasksController < ApplicationController
   private
 
   def task_params
-    params.permit(:id, :title, :description, :personnel_id, :patient_id, :date_to_execute )
+    params.permit(:id, :title, :description, :personnel_id, :patient_id, :date_to_execute, :status )
   end
 end
