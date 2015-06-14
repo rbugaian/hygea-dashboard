@@ -22,7 +22,7 @@
 
 		var storedId = localStorage.getItem("interval");
 		clearInterval(storedId);
-		
+
 		var intervalId = setInterval(setAlerter, 500);
 		
 		localStorage.setItem("interval", intervalId);	
@@ -76,8 +76,13 @@
 	    </thead>
 	    <tbody>
 
-	    <% current_doctor.tasks.order('date_to_execute DESC').each do |task| %>
-	    
+
+	    <% if current_doctor.is_admin %>
+	    	<% current_doctor.tasks.order('date_to_execute DESC').each do |task| %>
+	    <% else %>
+	    	<% Task.all.find(personnel_id: current_doctor.id).order('date_to_execute DESC').each do |task| %>
+	    <% end %>
+
 	      <% if task.should_execute %>
 	      <tr class="alerting danger">
 	      <% else %>
