@@ -27,41 +27,79 @@
     </thead>
     <tbody>
 
-    <% current_doctor.tasks.order('date_to_execute DESC').each do |task| %>
-      <% if task.should_execute %>
-        <tr class="alerting danger" >
-      <% else %>
-        <tr>
+    <% if current_doctor.is_admin %>
+        <% current_doctor.tasks.order('date_to_execute DESC').each do |task| %>
+        <% if task.should_execute %>
+        <tr class="alerting danger">
+        <% else %>
+          <tr>
+        <% end %>
+
+          <td class="text-centered"><%= task.id %></td>
+          <td ><%= link_to task.title, { controller: 'tasks', action: 'show_task', id: task } %> </td>
+          <td>
+            <% if task.status == 0 %>
+          
+          <div class="alert alert-danger" role="alert">
+              Waiting  
+          </div>
+
+        <% elsif task.status == 1 %>
+
+          <div class="alert alert-info" role="alert">
+              Pending
+          </div>
+
+        <% else %>
+
+          <div class="alert alert-success" role="alert">
+              Done
+          </div>
+
+        <% end %>
+          </td>
+          <td class="text-centered"><%= task.created_at.strftime("%H:%M on %d %B %Y") %></td>
+          <td class="text-centered"><%= task.date_to_execute.strftime("%H:%M on %d %B %Y") %></td>
+
+        </tr>
       <% end %>
+      <% else %>
+        <% Task.where('personnel_id = ?', current_doctor.id).order('date_to_execute DESC').each do |task| %>
+        <% if task.should_execute %>
+        <tr class="alerting danger">
+        <% else %>
+          <tr>
+        <% end %>
 
-        <td class="text-centered"><%= task.id %></td>
-        <td ><%= link_to task.title, { controller: 'tasks', action: 'show_task', id: task } %> </td>
-        <td>
-        	<% if task.status == 0 %>
-				
-				<div class="alert alert-danger" role="alert">
-						Waiting  
-				</div>
+          <td class="text-centered"><%= task.id %></td>
+          <td ><%= link_to task.title, { controller: 'tasks', action: 'show_task', id: task } %> </td>
+          <td>
+            <% if task.status == 0 %>
+          
+          <div class="alert alert-danger" role="alert">
+              Waiting  
+          </div>
 
-			<% elsif task.status == 1 %>
+        <% elsif task.status == 1 %>
 
-				<div class="alert alert-info" role="alert">
-						Pending
-				</div>
+          <div class="alert alert-info" role="alert">
+              Pending
+          </div>
 
-			<% else %>
+        <% else %>
 
-				<div class="alert alert-success" role="alert">
-  					Done
-				</div>
+          <div class="alert alert-success" role="alert">
+              Done
+          </div>
 
-			<% end %>
-        </td>
-        <td class="text-centered"><%= task.created_at.strftime("%H:%M on %d %B %Y") %></td>
-        <td class="text-centered"><%= task.date_to_execute.strftime("%H:%M on %d %B %Y") %></td>
+        <% end %>
+          </td>
+          <td class="text-centered"><%= task.created_at.strftime("%H:%M on %d %B %Y") %></td>
+          <td class="text-centered"><%= task.date_to_execute.strftime("%H:%M on %d %B %Y") %></td>
 
-      </tr>
-    <% end %>
+        </tr>
+      <% end %>
+      <% end %>
  
     </tbody>
   </table>
