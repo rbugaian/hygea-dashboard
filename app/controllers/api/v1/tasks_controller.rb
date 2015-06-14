@@ -14,7 +14,14 @@ class Api::V1::TasksController < ApplicationController
   def list
     doctor = current_doctor
     if doctor
-      task_list = current_doctor.tasks
+
+      task_list = nil
+
+      if current_doctor.is_admin
+        task_list = current_doctor.tasks
+      else
+        task_list = Task.where('patient_id = ?', current_doctor.id)
+      end
 
       if task_list
         render json: task_list.as_json(:only => [:id, :title, :date_to_execute, :date_to_execute, :created_at] ), status: 201
