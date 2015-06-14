@@ -50,6 +50,4 @@ class DoctorsController < ApplicationController
     logger.debug 'Provided Params: ' + params.inspect
     params.permit(:email, :first_name, :last_name, :password, :password_confirmation)
   end
-
-
 end

@@ -19,7 +19,14 @@
 	$( document ).ready(function() {
 		console.log("Loaded");
 		setRefresher();	
-		setInterval(setAlerter, 500);
+
+		var storedId = localStorage.getItem("interval");
+		clearInterval(storedId);
+		
+		var intervalId = setInterval(setAlerter, 500);
+		
+		localStorage.setItem("interval", intervalId);	
+
 		function setAlerter() {
 			var trs = document.getElementsByClassName('alerting');
 
@@ -32,7 +39,7 @@
 				}
 
 			} else {
-				document.title = "Hygea Dashboard"
+				document.title = "Hygea Dashboard";
 			}
 
 			for (i = 0; i < trs.length; i++) {

@@ -6,7 +6,7 @@
 				<li><a href="/personnel_section">Personnel</a></li>
 			<% end %>
   		<li><a href="/patients_section">Patients</a></li>
-  		<li><a href="#">Export</a></li>
+  		<li><a href="/wards_section">Wards</a></li>
   	</ul>
   </div>
 <% end %>
@@ -37,8 +37,6 @@
   	        <h5 >Title:</h5>
   	        <%= text_field_tag :title, nil, class: 'form-control', placeholder: 'Enter title', required: true, autofocus: true, value: @task_to_edit.title %>
   	      </div>
-
-          
 
           <div class="form-group  task-create-field-container">
             <h5 >Time:</h5>
